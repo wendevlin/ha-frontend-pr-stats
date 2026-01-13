@@ -14,7 +14,23 @@ A beautiful CLI tool to display GitHub PR statistics for the home-assistant/fron
 
 ## Installation
 
-Install dependencies:
+### Install Bun
+
+If you don't have Bun installed yet:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+Or on macOS:
+
+```bash
+brew install oven-sh/bun/bun
+```
+
+For other installation methods, visit [bun.sh](https://bun.sh)
+
+### Install Dependencies
 
 ```bash
 bun install
@@ -56,25 +72,35 @@ The tool will:
   Home Assistant Frontend - PR Statistics
 ════════════════════════════════════════════════════════════
 
-┌─────────────────────────────────────────────┬──────────┐
-│ Metric                                      │ Count    │
-├─────────────────────────────────────────────┼──────────┤
-│ Total Open + Draft PRs                      │ 150      │
-├─────────────────────────────────────────────┼──────────┤
-│ Open PRs (non-draft)                        │ 120      │
-├─────────────────────────────────────────────┼──────────┤
-│ Draft PRs                                   │ 30       │
-├─────────────────────────────────────────────┼──────────┤
-│                                             │          │
-├─────────────────────────────────────────────┼──────────┤
-│ Open PRs (filtered)                         │ 85       │
-└─────────────────────────────────────────────┴──────────┘
+┌────────────────────────┬───────┐
+│ Metric                 │ Count │
+├────────────────────────┼───────┤
+│ Total Open + Draft PRs │ 55    │
+├────────────────────────┼───────┤
+│ Open PRs (non-draft)   │ 24    │
+├────────────────────────┼───────┤
+│ Draft PRs              │ 31    │
+├────────────────────────┼───────┤
+│ Open PRs (filtered)    │ 14    │
+└────────────────────────┴───────┘
 
 Filtered PRs exclude:
   • Draft PRs
   • PRs with "wait for backend" label
   • PRs with "Needs UX" label
   • PRs with changes requested
+
+Note: GitHub filter link excludes labels but not review state
+
+Quick Links:
+  All: https://github.com/home-assistant/frontend/pulls
+  Non-draft: https://github.com/home-assistant/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse
+  Draft: https://github.com/home-assistant/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Atrue
+  Filtered: https://github.com/home-assistant/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+-label%3A%22wait+for+backend%22+-label%3A%22Needs+UX%22
+
+════════════════════════════════════════════════════════════
+
+No PRs needing attention! All filtered PRs have reviewers or assignees.
 
 ════════════════════════════════════════════════════════════
 ```
