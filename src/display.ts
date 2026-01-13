@@ -1,6 +1,5 @@
 import Table from 'cli-table3';
 import chalk from 'chalk';
-import terminalLink from 'terminal-link';
 import { PRStats, PRInfo } from './github.js';
 
 export function displayStats(stats: PRStats, needsAttentionPRs: PRInfo[]): void {
@@ -13,11 +12,11 @@ export function displayStats(stats: PRStats, needsAttentionPRs: PRInfo[]): void 
       chalk.white.bold('Metric'),
       chalk.white.bold('Count'),
     ],
-    colWidths: [45, 10],
     style: {
       head: [],
       border: ['gray'],
     },
+    wordWrap: true,
   });
 
   // GitHub URLs for each filter
@@ -29,20 +28,19 @@ export function displayStats(stats: PRStats, needsAttentionPRs: PRInfo[]): void 
 
   table.push(
     [
-      chalk.cyan(terminalLink('Total Open + Draft PRs', allOpenUrl, { fallback: () => 'Total Open + Draft PRs' })),
+      chalk.cyan('Total Open + Draft PRs'),
       chalk.cyan.bold(stats.totalOpenAndDraft.toString()),
     ],
     [
-      chalk.green(terminalLink('Open PRs (non-draft)', nonDraftUrl, { fallback: () => 'Open PRs (non-draft)' })),
+      chalk.green('Open PRs (non-draft)'),
       chalk.green.bold(stats.openOnly.toString()),
     ],
     [
-      chalk.yellow(terminalLink('Draft PRs', draftUrl, { fallback: () => 'Draft PRs' })),
+      chalk.yellow('Draft PRs'),
       chalk.yellow.bold(stats.draftOnly.toString()),
     ],
-    ['', ''], // Empty row for spacing
     [
-      chalk.magenta(terminalLink('Open PRs (filtered)', filteredUrl, { fallback: () => 'Open PRs (filtered)' })),
+      chalk.magenta('Open PRs (filtered)'),
       chalk.magenta.bold(stats.filteredOpen.toString()),
     ]
   );
@@ -55,6 +53,13 @@ export function displayStats(stats: PRStats, needsAttentionPRs: PRInfo[]): void 
   console.log(chalk.gray('  • PRs with "Needs UX" label'));
   console.log(chalk.gray('  • PRs with changes requested'));
   console.log('\n' + chalk.gray('Note: GitHub filter link excludes labels but not review state'));
+
+  console.log('\n' + chalk.gray.bold('Quick Links:'));
+  console.log(chalk.gray('  All: ') + chalk.blue(allOpenUrl));
+  console.log(chalk.gray('  Non-draft: ') + chalk.blue(nonDraftUrl));
+  console.log(chalk.gray('  Draft: ') + chalk.blue(draftUrl));
+  console.log(chalk.gray('  Filtered: ') + chalk.blue(filteredUrl));
+
   console.log('\n' + chalk.cyan.bold('═'.repeat(60)) + '\n');
 
   // Display PRs that need attention (no reviewers, no assignees)
